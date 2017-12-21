@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Engineering Convert</string>
+    <string name="no_thanks">No, Thanks</string>
+    <string name="sure">Sure</string>
+    <string name="hey_we_are_so_glad_you_are_loving_our_app_we_would_love_your_rating_so_it_can_help_others_make_a_great_choice">Hey! We are so glad you are loving our app. We would love your rating so it can help others make a great choice.</string>
 </resources>
