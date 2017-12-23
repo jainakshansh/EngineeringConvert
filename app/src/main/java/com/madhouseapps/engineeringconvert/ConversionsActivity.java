@@ -63,15 +63,45 @@ public class ConversionsActivity extends AppCompatActivity {
         String ones = binToones(num);
         String twos = "";
         twos = ones;
-        int i;
-        for (i = num.length() - 1; i >= 0; i--) {
-            if (num.charAt(i) == '1') {
+        StringBuilder builder = new StringBuilder(ones);
+        boolean b = false;
+        for (int i = ones.length(); i > 0; i--) {
+            if (ones.charAt(i) == '1') {
+                builder.setCharAt(i, '0');
+            } else {
+                builder.setCharAt(i, '1');
+                b = true;
                 break;
             }
-            if (i == 0) {
-                return "1" + num;
-            }
         }
+        if (!b) {
+            twos = '1' + twos;
+        }
+        return twos;
+    }
+
+    private String decTobin(String num) {
+        /*
+        String res = "";
+        int number = Integer.parseInt(num);
+        while (number > 0) {
+            res = (number % 2) + res;
+            number = number / 2;
+        }
+        return res;
+        */
+        return String.valueOf(Integer.toBinaryString(Integer.parseInt(num)));
+    }
+
+    private String decTooct(String num) {
+        return String.valueOf(Integer.toOctalString(Integer.parseInt(num)));
+    }
+
+    private String decTodec(String num) {
         return num;
+    }
+
+    private String decTohex(String num) {
+        return String.valueOf(Integer.toHexString(Integer.parseInt(num)));
     }
 }
