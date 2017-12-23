@@ -21,12 +21,14 @@
         app:layout_constraintVertical_chainStyle="spread">
 
         <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/fromSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
             android:backgroundTint="@android:color/white" />
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/fromEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
@@ -47,11 +49,13 @@
         app:layout_constraintVertical_chainStyle="spread">
 
         <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/toSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp" />
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/toEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp" />
@@ -67,5 +71,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/rate_us"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/rate_us"
+        android:src="@drawable/ic_star_ds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/share_app"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/share_app"
+        android:src="@drawable/ic_share_ds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/see_all_convs"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/ic_list_ds"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
