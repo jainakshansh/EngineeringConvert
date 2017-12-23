@@ -104,4 +104,14 @@ public class ConversionsActivity extends AppCompatActivity {
     private String decTohex(String num) {
         return String.valueOf(Integer.toHexString(Integer.parseInt(num)));
     }
+
+    private String decToones(String num) {
+        String bin = decTobin(num);
+        return binToones(bin);
+    }
+
+    private String decTotwos(String num) {
+        String bin = decTobin(num);
+        return binTotwos(bin);
+    }
 }
