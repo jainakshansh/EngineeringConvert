@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.math.BigInteger;
+
 public class ConversionsActivity extends AppCompatActivity {
 
     private AppCompatSpinner fromSpinner, toSpinner;
@@ -112,6 +114,57 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private String decTotwos(String num) {
         String bin = decTobin(num);
+        return binTotwos(bin);
+    }
+
+    private String octTobin(String num) {
+        String res = "", binary;
+        int remainder;
+        int octal = Integer.parseInt(num);
+        while (octal != 0) {
+            remainder = octal % 10;
+            binary = decTobin(String.valueOf(remainder));
+            if (octal > 8) {
+                if (binary.length() == 1) {
+                    binary = "00" + binary;
+                } else if (binary.length() == 2) {
+                    binary = "0" + binary;
+                }
+            }
+            res = binary + res;
+            octal = octal / 10;
+        }
+        return res;
+    }
+
+    private String octTooct(String num) {
+        return num;
+    }
+
+    private String octTodec(String num) {
+        return String.valueOf(Integer.parseInt(num, 8));
+    }
+
+    private String hexTobin(String num) {
+        return new BigInteger(num, 16).toString(2);
+    }
+
+    private String hexTodec(String num) {
+        return String.valueOf(Integer.parseInt(num, 16));
+    }
+
+    private String hexTooct(String num) {
+        String dec = hexTodec(num);
+        return String.valueOf(Integer.toOctalString(Integer.parseInt(dec)));
+    }
+
+    private String hexToones(String num) {
+        String bin = hexTobin(num);
+        return binToones(bin);
+    }
+
+    private String hexTotwos(String num) {
+        String bin = hexTobin(num);
         return binTotwos(bin);
     }
 }
