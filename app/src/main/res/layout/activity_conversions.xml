@@ -32,7 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:backgroundTint="@android:color/white" />
+            android:backgroundTint="@android:color/white"
+            android:inputType="numberDecimal"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
@@ -58,7 +60,10 @@
             android:id="@+id/toEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="24dp" />
+            android:layout_margin="24dp"
+            android:backgroundTint="@color/deepSpace"
+            android:inputType="numberDecimal"
+            android:textColor="@color/deepSpace" />
 
     </LinearLayout>
 

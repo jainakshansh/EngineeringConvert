@@ -1,14 +1,22 @@
 package com.madhouseapps.engineeringconvert;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.madhouseapps.engineeringconvert.Adapters.ConversionAdapter;
+
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConversionsActivity extends AppCompatActivity {
 
@@ -18,12 +26,26 @@ public class ConversionsActivity extends AppCompatActivity {
     private int from = 0, to = 0;
     private Typeface typeface;
     private ImageView share, rate;
+    private List<String> conversionList;
+    private ConversionAdapter conversionAdapter;
+    private SharedPreferences sharedPreferences;
+    int appOpened = 1;
+    String res = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversions);
 
+        //Checking for the number of times the app has been opened, according to which rate dialog will appear.
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        appOpened = sharedPreferences.getInt("appOpened", 0);
+        appOpened++;
+        editor.putInt("appOpened", appOpened);
+        editor.apply();
+
+        //Referencing all the views from the XML file.
         fromSpinner = findViewById(R.id.fromSpinner);
         toSpinner = findViewById(R.id.toSpinner);
         fromEdit = findViewById(R.id.fromEditText);
@@ -35,6 +57,83 @@ public class ConversionsActivity extends AppCompatActivity {
         share = findViewById(R.id.share_app);
         rate = findViewById(R.id.rate_us);
         seeAll = findViewById(R.id.see_all_convs);
+
+        //Initialising the conversion list.
+        conversionList = new ArrayList<>();
+        conversionList.add("Binary");
+        conversionList.add("Octal");
+        conversionList.add("Decimal");
+        conversionList.add("Hexadecimal");
+        conversionList.add("1's Complement");
+        conversionList.add("2's Complement");
+
+        conversionAdapter = new ConversionAdapter(getApplicationContext(), conversionList);
+    }
+
+    private void fromSpinnerWorking() {
+        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                from = fromSpinner.getSelectedItemPosition();
+                to = toSpinner.getSelectedItemPosition();
+                if (!fromEdit.getText().toString().isEmpty()) {
+                    switch (from) {
+                        case 0:
+                            switch (to) {
+                                case 0:
+                                    res = binTobin(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 1:
+                                    res = binTooct(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 2:
+                                    res = binTodec(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 3:
+                                    res = binToones(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 4:
+                                    res = binTotwos(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                            }
+                            break;
+                        case 1:
+                            switch (to) {
+                                case 0:
+                                    res = octTobin(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 1:
+                                    res = octTooct(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 2:
+                                    res = octTodec(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 3:
+                                    res = binToones(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 4:
+                                    res = binTotwos(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private String binTobin(String num) {
