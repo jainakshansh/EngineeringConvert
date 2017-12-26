@@ -68,6 +68,9 @@ public class ConversionsActivity extends AppCompatActivity {
         conversionList.add("2's Complement");
 
         conversionAdapter = new ConversionAdapter(getApplicationContext(), conversionList);
+        fromSpinner.setAdapter(conversionAdapter);
+        toSpinner.setAdapter(conversionAdapter);
+        fromSpinnerWorking();
     }
 
     private void fromSpinnerWorking() {
