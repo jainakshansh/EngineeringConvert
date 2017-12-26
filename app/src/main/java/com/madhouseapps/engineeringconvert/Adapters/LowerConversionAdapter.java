@@ -38,7 +38,7 @@ public class LowerConversionAdapter extends ArrayAdapter<String> {
 
         View view = convertView;
         if (view == null) {
-            LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_lower, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item_lower, parent, false);
         }
 
         TextView spinnerText = view.findViewById(R.id.textView_spinnerItem_lower);

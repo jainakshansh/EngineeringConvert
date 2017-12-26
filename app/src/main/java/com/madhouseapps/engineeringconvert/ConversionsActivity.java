@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.madhouseapps.engineeringconvert.Adapters.ConversionAdapter;
+import com.madhouseapps.engineeringconvert.Adapters.LowerConversionAdapter;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ConversionsActivity extends AppCompatActivity {
     private ImageView share, rate;
     private List<String> conversionList;
     private ConversionAdapter conversionAdapter;
+    private LowerConversionAdapter lowerConversionAdapter;
     private SharedPreferences sharedPreferences;
     int appOpened = 1;
     String res = "";
@@ -68,8 +70,11 @@ public class ConversionsActivity extends AppCompatActivity {
         conversionList.add("2's Complement");
 
         conversionAdapter = new ConversionAdapter(getApplicationContext(), conversionList);
+        lowerConversionAdapter = new LowerConversionAdapter(getApplicationContext(), conversionList);
         fromSpinner.setAdapter(conversionAdapter);
-        toSpinner.setAdapter(conversionAdapter);
+        conversionAdapter.setDropDownViewResource(R.layout.item_dropdown);
+        toSpinner.setAdapter(lowerConversionAdapter);
+        lowerConversionAdapter.setDropDownViewResource(R.layout.item_dropdown);
         fromSpinnerWorking();
     }
 
@@ -96,10 +101,12 @@ public class ConversionsActivity extends AppCompatActivity {
                                     toEdit.setText(res);
                                     break;
                                 case 3:
+                                    break;
+                                case 4:
                                     res = binToones(fromEdit.getText().toString());
                                     toEdit.setText(res);
                                     break;
-                                case 4:
+                                case 5:
                                     res = binTotwos(fromEdit.getText().toString());
                                     toEdit.setText(res);
                                     break;
@@ -120,15 +127,74 @@ public class ConversionsActivity extends AppCompatActivity {
                                     toEdit.setText(res);
                                     break;
                                 case 3:
-                                    res = binToones(fromEdit.getText().toString());
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            switch (to) {
+                                case 0:
+                                    res = decTobin(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 1:
+                                    res = decTooct(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 2:
+                                    res = decTodec(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 3:
+                                    res = decTohex(fromEdit.getText().toString());
                                     toEdit.setText(res);
                                     break;
                                 case 4:
-                                    res = binTotwos(fromEdit.getText().toString());
+                                    res = decToones(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 5:
+                                    res = decTotwos(fromEdit.getText().toString());
                                     toEdit.setText(res);
                                     break;
                             }
                             break;
+                        case 3:
+                            switch (to) {
+                                case 0:
+                                    res = hexTobin(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 1:
+                                    res = hexTooct(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 2:
+                                    res = hexTodec(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 3:
+                                    res = hexTohex(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 4:
+                                    res = hexToones(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                                case 5:
+                                    res = hexTotwos(fromEdit.getText().toString());
+                                    toEdit.setText(res);
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            switch (to) {
+                                case 0:
+                                    break;
+                            }
                     }
                 }
             }
@@ -260,6 +326,10 @@ public class ConversionsActivity extends AppCompatActivity {
         return String.valueOf(Integer.toOctalString(Integer.parseInt(dec)));
     }
 
+    private String hexTohex(String num) {
+        return num;
+    }
+
     private String hexToones(String num) {
         String bin = hexTobin(num);
         return binToones(bin);
@@ -268,5 +338,15 @@ public class ConversionsActivity extends AppCompatActivity {
     private String hexTotwos(String num) {
         String bin = hexTobin(num);
         return binTotwos(bin);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (appOpened % 8 == 0) {
+            MadHouseDialog dialog = new MadHouseDialog(ConversionsActivity.this);
+            dialog.show();
+        } else {
+            finish();
+        }
     }
 }
