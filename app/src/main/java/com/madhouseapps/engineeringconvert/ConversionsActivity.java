@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -84,8 +83,8 @@ public class ConversionsActivity extends AppCompatActivity {
         conversionList.add("Octal");
         conversionList.add("Decimal");
         conversionList.add("Hexadecimal");
-        conversionList.add("1's Complement");
-        conversionList.add("2's Complement");
+        conversionList.add("Gray");
+        conversionList.add("ASCII");
 
         conversionAdapter = new ConversionAdapter(getApplicationContext(), conversionList);
         lowerConversionAdapter = new LowerConversionAdapter(getApplicationContext(), conversionList);
@@ -114,7 +113,6 @@ public class ConversionsActivity extends AppCompatActivity {
                     if (fromSpinner.getSelectedItemPosition() == 0) {
                         //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
                         vibratePhone(isBinary(fromEdit.getText().toString()));
-                        callSnackbar();
                     }
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
@@ -126,7 +124,6 @@ public class ConversionsActivity extends AppCompatActivity {
                     if (toSpinner.getSelectedItemPosition() == 0) {
                         //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
                         vibratePhone(isBinary(toEdit.getText().toString()));
-                        callSnackbar();
                     }
                     fromEdit.addTextChangedListener(textWatcher);
                 }
@@ -184,12 +181,15 @@ public class ConversionsActivity extends AppCompatActivity {
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.gc();
                 fromConditions();
+                /*
                 if (fromSpinner.getSelectedItemPosition() == 3) {
                     fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     fromEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
+                */
             }
 
             @Override
@@ -200,12 +200,15 @@ public class ConversionsActivity extends AppCompatActivity {
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                System.gc();
                 fromConditions();
+                /*
                 if (toSpinner.getSelectedItemPosition() == 3) {
                     toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     toEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
+                */
             }
 
             @Override
@@ -238,11 +241,11 @@ public class ConversionsActivity extends AppCompatActivity {
                             toEdit.setText(res);
                             break;
                         case 4:
-                            res = binToones(fromEdit.getText().toString());
+                            res = binTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            res = binTotwos(fromEdit.getText().toString());
+                            res = binToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                     }
@@ -266,8 +269,12 @@ public class ConversionsActivity extends AppCompatActivity {
                             toEdit.setText(res);
                             break;
                         case 4:
+                            res = octTogray(octTobin(fromEdit.getText().toString()));
+                            toEdit.setText(res);
                             break;
                         case 5:
+                            res = octToascii(octTobin(fromEdit.getText().toString()));
+                            toEdit.setText(res);
                             break;
                     }
                     break;
@@ -290,11 +297,11 @@ public class ConversionsActivity extends AppCompatActivity {
                             toEdit.setText(res);
                             break;
                         case 4:
-                            res = decToones(fromEdit.getText().toString());
+                            res = decTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            res = decTotwos(fromEdit.getText().toString());
+                            res = decToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                     }
@@ -318,11 +325,11 @@ public class ConversionsActivity extends AppCompatActivity {
                             toEdit.setText(res);
                             break;
                         case 4:
-                            res = hexToones(fromEdit.getText().toString());
+                            res = hexTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            res = hexTotwos(fromEdit.getText().toString());
+                            res = hexToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                     }
@@ -355,6 +362,21 @@ public class ConversionsActivity extends AppCompatActivity {
                             break;
                     }
                     break;
+                case 5:
+                    switch (to) {
+                        case 0:
+                            break;
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                    }
             }
         }
     }
@@ -383,11 +405,11 @@ public class ConversionsActivity extends AppCompatActivity {
                             fromEdit.setText(res);
                             break;
                         case 4:
-                            res = binToones(toEdit.getText().toString().trim());
+                            res = binTogray(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                         case 5:
-                            res = binTotwos(toEdit.getText().toString().trim());
+                            res = binToascii(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                     }
@@ -411,8 +433,12 @@ public class ConversionsActivity extends AppCompatActivity {
                             fromEdit.setText(res);
                             break;
                         case 4:
+                            res = octTogray(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
                             break;
                         case 5:
+                            res = octToascii(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
                             break;
                     }
                     break;
@@ -435,11 +461,11 @@ public class ConversionsActivity extends AppCompatActivity {
                             fromEdit.setText(res);
                             break;
                         case 4:
-                            res = decToones(toEdit.getText().toString().trim());
+                            res = decTogray(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                         case 5:
-                            res = decTotwos(toEdit.getText().toString().trim());
+                            res = decToascii(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                     }
@@ -463,21 +489,69 @@ public class ConversionsActivity extends AppCompatActivity {
                             fromEdit.setText(res);
                             break;
                         case 4:
-                            res = hexToones(toEdit.getText().toString().trim());
+                            res = hexTogray(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                         case 5:
-                            res = hexTotwos(toEdit.getText().toString().trim());
+                            res = hexToascii(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                     }
                     break;
                 case 4:
                     switch (to) {
+                        case 0:
+                            res = grayTobin(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 1:
+                            res = grayTooct(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 2:
+                            res = grayTodec(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 3:
+                            res = grayTohex(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 4:
+                            res = grayTogray(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 5:
+                            res = grayToascii(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
                     }
                     break;
                 case 5:
                     switch (to) {
+                        case 0:
+                            res = asciiTobin(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 1:
+                            res = asciiTooct(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 2:
+                            res = asciiTodec(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 3:
+                            res = asciiTohex(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 4:
+                            res = asciiTogray(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
+                        case 5:
+                            res = asciiToascii(toEdit.getText().toString().trim());
+                            fromEdit.setText(res);
+                            break;
                     }
                     break;
             }
@@ -491,6 +565,7 @@ public class ConversionsActivity extends AppCompatActivity {
             } else {
                 ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(200);
             }
+            callSnackbar();
         }
     }
 
@@ -507,10 +582,18 @@ public class ConversionsActivity extends AppCompatActivity {
         if (snackCallTrack > 0) {
             return;
         } else {
-            Snackbar snackbar = Snackbar.make(constraintParent, "Please enter only binary number", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(constraintParent, "Please enter valid number w.r.t. category.", Snackbar.LENGTH_SHORT);
             snackbar.show();
         }
         snackCallTrack++;
+    }
+
+    private char flip(char c) {
+        return (c == '0') ? '1' : '0';
+    }
+
+    private char xor_c(char a, char b) {
+        return (a == b) ? '0' : '1';
     }
 
     private String binTobin(String num) {
@@ -559,37 +642,22 @@ public class ConversionsActivity extends AppCompatActivity {
         return hexnum;
     }
 
-    private char flip(char c) {
-        return (c == '0') ? '1' : '0';
+    private String binTogray(String num) {
+        String gray = "";
+        gray += num.charAt(0);
+        for (int i = 1; i < num.length(); i++) {
+            gray += xor_c(num.charAt(i - 1), num.charAt(i));
+        }
+        return gray;
     }
 
-    private String binToones(String num) {
-        String ones = "";
-        for (int i = 0; i < num.length(); i++) {
-            ones += flip(num.charAt(i));
+    private String binToascii(String num) {
+        String lastString = "";
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < lastString.length(); i += 8) {
+            builder.append((char) Integer.parseInt(lastString.substring(i, i + 8), 2));
         }
-        return ones;
-    }
-
-    private String binTotwos(String num) {
-        String ones = binToones(num);
-        String twos = "";
-        twos = ones;
-        StringBuilder builder = new StringBuilder(ones);
-        boolean b = false;
-        for (int i = ones.length(); i > 0; i--) {
-            if (ones.charAt(i) == '1') {
-                builder.setCharAt(i, '0');
-            } else {
-                builder.setCharAt(i, '1');
-                b = true;
-                break;
-            }
-        }
-        if (!b) {
-            twos = '1' + twos;
-        }
-        return twos;
+        return builder.toString();
     }
 
     private String decTobin(String num) {
@@ -631,14 +699,14 @@ public class ConversionsActivity extends AppCompatActivity {
         return hexnum;
     }
 
-    private String decToones(String num) {
+    private String decTogray(String num) {
         String bin = decTobin(num);
-        return binToones(bin);
+        return binTogray(bin);
     }
 
-    private String decTotwos(String num) {
+    private String decToascii(String num) {
         String bin = decTobin(num);
-        return binTotwos(bin);
+        return binToascii(bin);
     }
 
     private String octTobin(String num) {
@@ -681,6 +749,16 @@ public class ConversionsActivity extends AppCompatActivity {
         return decTohex(dec);
     }
 
+    private String octTogray(String num) {
+        String dec = octTodec(num);
+        return decTogray(dec);
+    }
+
+    private String octToascii(String num) {
+        String dec = octTodec(num);
+        return decToascii(dec);
+    }
+
     private String hexTobin(String num) {
         return new BigInteger(num, 16).toString(2);
     }
@@ -705,14 +783,88 @@ public class ConversionsActivity extends AppCompatActivity {
         return num;
     }
 
-    private String hexToones(String num) {
+    private String hexTogray(String num) {
         String bin = hexTobin(num);
-        return binToones(bin);
+        return binTogray(bin);
     }
 
-    private String hexTotwos(String num) {
+    private String hexToascii(String num) {
         String bin = hexTobin(num);
-        return binTotwos(bin);
+        return binToascii(bin);
+    }
+
+    private String grayTobin(String num) {
+        String binary = "";
+        binary += num.charAt(0);
+        for (int i = 1; i < num.length(); i++) {
+            if (num.charAt(i) == '0') {
+                binary += binary.charAt(i - 1);
+            } else {
+                binary += flip(binary.charAt(i - 1));
+            }
+        }
+        return binary;
+    }
+
+    private String grayTooct(String num) {
+        String bin = grayTobin(num);
+        return binTooct(bin);
+    }
+
+    private String grayTodec(String num) {
+        String bin = grayTobin(num);
+        return binTodec(bin);
+    }
+
+    private String grayTohex(String num) {
+        String bin = grayTobin(num);
+        return binTohex(bin);
+    }
+
+    private String grayTogray(String num) {
+        return num;
+    }
+
+    private String grayToascii(String num) {
+        String bin = grayTobin(num);
+        return binToascii(bin);
+    }
+
+    private String asciiTobin(String num) {
+        byte[] bytes = num.getBytes();
+        StringBuilder binary = new StringBuilder();
+        for (byte b : bytes) {
+            int val = b;
+            for (int i = 0; i < 8; i++) {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+            }
+        }
+        return binary.toString();
+    }
+
+    private String asciiTooct(String num) {
+        String bin = asciiTobin(num);
+        return binTooct(bin);
+    }
+
+    private String asciiTodec(String num) {
+        String bin = asciiTobin(num);
+        return binTodec(bin);
+    }
+
+    private String asciiTohex(String num) {
+        String bin = asciiTobin(num);
+        return binTohex(bin);
+    }
+
+    private String asciiTogray(String num) {
+        String bin = asciiTobin(num);
+        return binTogray(bin);
+    }
+
+    private String asciiToascii(String num) {
+        return num;
     }
 
     @Override
