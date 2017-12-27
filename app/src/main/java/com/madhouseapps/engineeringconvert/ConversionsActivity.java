@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -183,6 +184,11 @@ public class ConversionsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 fromSpinnerConditions();
+                if (fromSpinner.getSelectedItemPosition() == 3) {
+                    fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
+                } else {
+                    fromEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
             }
 
             @Override
@@ -194,6 +200,11 @@ public class ConversionsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 fromSpinnerConditions();
+                if (toSpinner.getSelectedItemPosition() == 3) {
+                    toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
+                } else {
+                    toEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
             }
 
             @Override
@@ -456,7 +467,7 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private String decTooct(String num) {
         int i = 1, octnum = 0;
-        long decimal = Long.parseLong(num);
+        int decimal = Integer.parseInt(num);
         while (decimal != 0) {
             octnum += (decimal % 8) * i;
             i = i * 10;
@@ -469,7 +480,15 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String decTohex(String num) {
-        return String.valueOf(Integer.toHexString(Integer.parseInt(num)));
+        String hexnum = "";
+        char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        int decnum = Integer.parseInt(num), rem;
+        while (decnum > 0) {
+            rem = decnum % 16;
+            hexnum = hex[rem] + hexnum;
+            decnum = decnum / 16;
+        }
+        return hexnum;
     }
 
     private String decToones(String num) {
@@ -522,12 +541,19 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String hexTodec(String num) {
-        return String.valueOf(Integer.parseInt(num, 16));
+        String digits = num.toUpperCase();
+        int decnum = 0;
+        for (int i = 0; i < digits.length(); i++) {
+            char c = digits.charAt(i);
+            int d = digits.indexOf(c);
+            decnum = (16 * decnum) + d;
+        }
+        return String.valueOf(decnum);
     }
 
     private String hexTooct(String num) {
         String dec = hexTodec(num);
-        return String.valueOf(Integer.toOctalString(Integer.parseInt(dec)));
+        return decTooct(dec);
     }
 
     private String hexTohex(String num) {
