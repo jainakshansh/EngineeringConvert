@@ -34,7 +34,7 @@
             android:id="@+id/fromEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="36dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
@@ -42,7 +42,7 @@
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:id="@+id/toEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="36dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
@@ -79,7 +79,7 @@
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@color/deepSpace"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
     </LinearLayout>
 

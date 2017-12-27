@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -27,20 +30,25 @@ import java.util.List;
 
 public class ConversionsActivity extends AppCompatActivity {
 
+    private ConstraintLayout constraintParent;
     private AppCompatSpinner fromSpinner, toSpinner;
     private AppCompatEditText fromEdit, toEdit;
     private Button swapButton, seeAll;
+    private ImageView share, rate;
+
     private int from = 0, to = 0;
     private Typeface typeface;
-    private ImageView share, rate;
+
+    private TextWatcher textWatcher;
     private List<String> conversionList;
     private ConversionAdapter conversionAdapter;
     private LowerConversionAdapter lowerConversionAdapter;
+
     private SharedPreferences sharedPreferences;
     int appOpened = 1;
     String res = "";
 
-    private TextWatcher textWatcher;
+    int snackCallTrack = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +64,7 @@ public class ConversionsActivity extends AppCompatActivity {
         editor.apply();
 
         //Referencing all the views from the XML file.
+        constraintParent = findViewById(R.id.conversion_constraint_parent);
         fromSpinner = findViewById(R.id.fromSpinner);
         toSpinner = findViewById(R.id.toSpinner);
         fromEdit = findViewById(R.id.fromEditText);
@@ -102,8 +111,9 @@ public class ConversionsActivity extends AppCompatActivity {
                         toEdit.setText("");
                     }
                     if (fromSpinner.getSelectedItemPosition() == 0) {
-                        //Vibrates phone if the input is non-binary.
+                        //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
                         vibratePhone(isBinary(fromEdit.getText().toString()));
+                        callSnackbar();
                     }
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
@@ -112,8 +122,9 @@ public class ConversionsActivity extends AppCompatActivity {
                         fromEdit.setText("");
                     }
                     if (toSpinner.getSelectedItemPosition() == 0) {
-                        //Vibrates phone if the input is non-binary.
+                        //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
                         vibratePhone(isBinary(toEdit.getText().toString()));
+                        callSnackbar();
                     }
                     fromEdit.addTextChangedListener(textWatcher);
                 }
@@ -165,6 +176,28 @@ public class ConversionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.madhouseapps.engineeringconvert")));
+            }
+        });
+
+        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                fromSpinnerConditions();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                fromSpinnerConditions();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -325,9 +358,20 @@ public class ConversionsActivity extends AppCompatActivity {
     public boolean isBinary(String number) {
         char[] ary = number.toCharArray();
         for (char c : ary) {
-            if (!(c == '0' || c == '1')) return false;
+            if (!(c == '0' || c == '1'))
+                return false;
         }
         return true;
+    }
+
+    private void callSnackbar() {
+        if (snackCallTrack > 0) {
+            return;
+        } else {
+            Snackbar snackbar = Snackbar.make(constraintParent, "Please enter only binary number", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+        }
+        snackCallTrack++;
     }
 
     private String binTobin(String num) {
@@ -352,7 +396,16 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String binTodec(String num) {
-        return String.valueOf(Integer.parseInt(num, 2));
+        Long bin = Long.parseLong(num);
+        int decnum = 0, i = 0;
+        long remainder;
+        while (bin != 0) {
+            remainder = bin % 10;
+            bin = bin / 10;
+            decnum += remainder * Math.pow(2, i);
+            ++i;
+        }
+        return String.valueOf(decnum);
     }
 
     private char flip(char c) {
@@ -389,20 +442,26 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String decTobin(String num) {
-        /*
-        String res = "";
-        int number = Integer.parseInt(num);
-        while (number > 0) {
-            res = (number % 2) + res;
-            number = number / 2;
+        long binnum = 0, remainder;
+        int i = 1;
+        long n = Long.parseLong(num);
+        while (n != 0) {
+            remainder = n % 2;
+            n = n / 2;
+            binnum += remainder * i;
+            i = i * 10;
         }
-        return res;
-        */
-        return String.valueOf(Integer.toBinaryString(Integer.parseInt(num)));
+        return String.valueOf(binnum);
     }
 
     private String decTooct(String num) {
-        return String.valueOf(Integer.toOctalString(Integer.parseInt(num)));
+        int i = 1, octnum = 0;
+        long decimal = Long.parseLong(num);
+        while (decimal != 0) {
+            octnum += (decimal % 8) * i;
+            i = i * 10;
+        }
+        return String.valueOf(octnum);
     }
 
     private String decTodec(String num) {
@@ -448,7 +507,14 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String octTodec(String num) {
-        return String.valueOf(Integer.parseInt(num, 8));
+        int decnum = 0, i = 0;
+        Long octal = Long.parseLong(num);
+        while (octal != 0) {
+            decnum += (octal % 10) * Math.pow(8, i);
+            ++i;
+            octal = octal / 10;
+        }
+        return String.valueOf(decnum);
     }
 
     private String hexTobin(String num) {
