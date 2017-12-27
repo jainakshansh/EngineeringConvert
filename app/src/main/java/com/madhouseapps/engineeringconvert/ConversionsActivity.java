@@ -101,13 +101,19 @@ public class ConversionsActivity extends AppCompatActivity {
                     if (fromEdit.getText().toString().isEmpty()) {
                         toEdit.setText("");
                     }
-                    //Vibrates phone if the input is non-binary.
-                    vibratePhone(isBinary(fromEdit.getText().toString()));
+                    if (fromSpinner.getSelectedItemPosition() == 0) {
+                        //Vibrates phone if the input is non-binary.
+                        vibratePhone(isBinary(fromEdit.getText().toString()));
+                    }
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
                     fromEdit.removeTextChangedListener(textWatcher);
                     if (toEdit.getText().toString().isEmpty()) {
                         fromEdit.setText("");
+                    }
+                    if (toSpinner.getSelectedItemPosition() == 0) {
+                        //Vibrates phone if the input is non-binary.
+                        vibratePhone(isBinary(toEdit.getText().toString()));
                     }
                     fromEdit.addTextChangedListener(textWatcher);
                 }
@@ -329,7 +335,20 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String binTooct(String num) {
-        return Integer.toOctalString(Integer.parseInt(num));
+        Long bin = Long.parseLong(num);
+        int octnum = 0, decnum = 0, i = 0;
+        while (bin != 0) {
+            decnum += (bin % 10) * Math.pow(2, i);
+            ++i;
+            bin = bin / 10;
+        }
+        i = 1;
+        while (decnum != 0) {
+            octnum += (decnum % 8) * i;
+            decnum = decnum / 8;
+            i = i * 10;
+        }
+        return String.valueOf(octnum);
     }
 
     private String binTodec(String num) {
