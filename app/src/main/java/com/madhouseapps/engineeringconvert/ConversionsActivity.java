@@ -15,8 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -111,7 +111,10 @@ public class ConversionsActivity extends AppCompatActivity {
                         toEdit.setText("");
                     }
                     if (fromSpinner.getSelectedItemPosition() == 0) {
-                        //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
+                        //Nulls text if the input is non-binary and vibrates at wrong input.
+                        if (!isBinary(fromEdit.getText().toString())) {
+                            toEdit.setText("");
+                        }
                         vibratePhone(isBinary(fromEdit.getText().toString()));
                     }
                     toEdit.addTextChangedListener(textWatcher);
@@ -122,7 +125,10 @@ public class ConversionsActivity extends AppCompatActivity {
                         fromEdit.setText("");
                     }
                     if (toSpinner.getSelectedItemPosition() == 0) {
-                        //Vibrates phone if the input is non-binary and calls snackbar at first wrong input.
+                        //Nulls text if the input is non-binary and vibrates at wrong input.
+                        if (!isBinary(toEdit.getText().toString())) {
+                            fromEdit.setText("");
+                        }
                         vibratePhone(isBinary(toEdit.getText().toString()));
                     }
                     fromEdit.addTextChangedListener(textWatcher);
@@ -183,13 +189,11 @@ public class ConversionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 System.gc();
                 fromConditions();
-                /*
-                if (fromSpinner.getSelectedItemPosition() == 3) {
+                if (fromSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
                     fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     fromEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
-                */
             }
 
             @Override
@@ -202,17 +206,21 @@ public class ConversionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 System.gc();
                 fromConditions();
-                /*
-                if (toSpinner.getSelectedItemPosition() == 3) {
+                if (toSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
                     toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     toEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
-                */
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        seeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
@@ -225,32 +233,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 0:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "BintoBin");
                             res = binTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "BintoOct");
                             res = binTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "BintoDec");
                             res = binTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "BintoHex");
                             res = binTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "BintoGray");
                             res = binTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "BintoASCII");
                             res = binToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
@@ -259,32 +261,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 1:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "OctToBin");
                             res = octTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "OctToOct");
                             res = octTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "OctToDec");
                             res = octTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "OctToHex");
                             res = octTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "OctToGray");
                             res = octTogray(octTobin(fromEdit.getText().toString()));
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "OctToASCII");
                             res = octToascii(octTobin(fromEdit.getText().toString()));
                             toEdit.setText(res);
                             break;
@@ -293,32 +289,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 2:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "DecToBin");
                             res = decTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "DecToOct");
                             res = decTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "DecToDec");
                             res = decTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "DecToHex");
                             res = decTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "DecToGray");
                             res = decTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "DecToASCII");
                             res = decToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
@@ -327,32 +317,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 3:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "HexToBin");
                             res = hexTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "HexToOct");
                             res = hexTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "HexToDec");
                             res = hexTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "HexToHex");
                             res = hexTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "HexToGray");
                             res = hexTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "HexToASCII");
                             res = hexToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
@@ -361,32 +345,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 4:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "GrayToBin");
                             res = grayTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "GrayToOct");
                             res = grayTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "GrayToDec");
                             res = grayTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "GrayToBin");
                             res = grayTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "GrayToGray");
                             res = grayTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "GrayToASCII");
                             res = grayToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
@@ -395,32 +373,26 @@ public class ConversionsActivity extends AppCompatActivity {
                 case 5:
                     switch (to) {
                         case 0:
-                            Log.d("ADebug", "ASCIIToBin");
                             res = asciiTobin(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 1:
-                            Log.d("ADebug", "ASCIIToOct");
                             res = asciiTooct(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 2:
-                            Log.d("ADebug", "ASCIIToDec");
                             res = asciiTodec(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 3:
-                            Log.d("ADebug", "ASCIIToHex");
                             res = asciiTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 4:
-                            Log.d("ADebug", "ASCIIToGray");
                             res = asciiTogray(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
                         case 5:
-                            Log.d("ADebug", "ASCIIToASCII");
                             res = asciiToascii(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
@@ -618,8 +590,8 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     public boolean isBinary(String number) {
-        char[] ary = number.toCharArray();
-        for (char c : ary) {
+        char[] array = number.toCharArray();
+        for (char c : array) {
             if (!(c == '0' || c == '1'))
                 return false;
         }
