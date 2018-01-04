@@ -75,7 +75,7 @@ public class ConversionsActivity extends AppCompatActivity {
         toEdit.setTypeface(typeface);
         share = findViewById(R.id.share_app);
         rate = findViewById(R.id.rate_us);
-        seeAll = findViewById(R.id.see_all_convs);
+        //seeAll = findViewById(R.id.see_all_convs);
 
         //Initialising the conversion list.
         conversionList = new ArrayList<>();
@@ -218,11 +218,7 @@ public class ConversionsActivity extends AppCompatActivity {
             }
         });
 
-        seeAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        toSpinner.setSelection(2);
     }
 
     private void fromConditions() {

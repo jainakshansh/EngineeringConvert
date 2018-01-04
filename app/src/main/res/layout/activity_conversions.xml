@@ -101,7 +101,7 @@
         android:contentDescription="@string/rate_us"
         android:src="@drawable/ic_star_ds"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintRight_toLeftOf="@+id/share_app" />
 
     <ImageView
         android:id="@+id/share_app"
@@ -113,6 +113,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <!--
     <Button
         android:id="@+id/see_all_convs"
         android:layout_width="35dp"
@@ -122,5 +123,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+    -->
 
 </android.support.constraint.ConstraintLayout>
