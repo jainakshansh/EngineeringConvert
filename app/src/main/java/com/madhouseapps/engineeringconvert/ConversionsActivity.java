@@ -50,6 +50,9 @@ public class ConversionsActivity extends AppCompatActivity {
 
     int snackCallTrack = 0;
 
+    String bin = "";
+    int decnum = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +120,12 @@ public class ConversionsActivity extends AppCompatActivity {
                         }
                         vibratePhone(isBinary(fromEdit.getText().toString()));
                     }
+                    if (fromSpinner.getSelectedItemPosition() == 3) {
+                        if (!isHex(fromEdit.getText().toString())) {
+                            toEdit.setText("");
+                        }
+                        vibratePhone(isHex(fromEdit.getText().toString()));
+                    }
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
                     fromEdit.removeTextChangedListener(textWatcher);
@@ -130,6 +139,12 @@ public class ConversionsActivity extends AppCompatActivity {
                             fromEdit.setText("");
                         }
                         vibratePhone(isBinary(toEdit.getText().toString()));
+                    }
+                    if (toSpinner.getSelectedItemPosition() == 3) {
+                        if (!isHex(toEdit.getText().toString())) {
+                            fromEdit.setText("");
+                        }
+                        vibratePhone(isHex(toEdit.getText().toString()));
                     }
                     fromEdit.addTextChangedListener(textWatcher);
                 }
@@ -187,7 +202,7 @@ public class ConversionsActivity extends AppCompatActivity {
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.gc();
+                //Runtime.getRuntime().gc();
                 fromConditions();
                 if (fromSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
                     fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -204,7 +219,7 @@ public class ConversionsActivity extends AppCompatActivity {
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.gc();
+                //Runtime.getRuntime().gc();
                 fromConditions();
                 if (toSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
                     toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -217,7 +232,6 @@ public class ConversionsActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         toSpinner.setSelection(2);
     }
 
@@ -594,6 +608,10 @@ public class ConversionsActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean isHex(String number) {
+        return number.matches("^[0-9a-fA-F]+$");
+    }
+
     private void callSnackbar() {
         if (snackCallTrack > 0) {
             return;
@@ -618,7 +636,8 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private String binTooct(String num) {
         Long bin = Long.parseLong(num);
-        int octnum = 0, decnum = 0, i = 0;
+        int octnum = 0, i = 0;
+        decnum = 0;
         while (bin != 0) {
             decnum += (bin % 10) * Math.pow(2, i);
             ++i;
@@ -635,7 +654,8 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private String binTodec(String num) {
         Long bin = Long.parseLong(num);
-        int decnum = 0, i = 0;
+        decnum = 0;
+        int i = 0;
         long remainder;
         while (bin != 0) {
             remainder = bin % 10;
@@ -706,7 +726,8 @@ public class ConversionsActivity extends AppCompatActivity {
     private String decTohex(String num) {
         String hexnum = "";
         char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        int decnum = Integer.parseInt(num), rem;
+        decnum = Integer.parseInt(num);
+        int rem;
         while (decnum > 0) {
             rem = decnum % 16;
             hexnum = hex[rem] + hexnum;
@@ -716,30 +737,30 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String decTogray(String num) {
-        String bin = decTobin(num);
+        bin = decTobin(num);
         return binTogray(bin);
     }
 
     private String decToascii(String num) {
-        String bin = decTobin(num);
+        bin = decTobin(num);
         return binToascii(bin);
     }
 
     private String octTobin(String num) {
-        String res = "", binary;
+        res = "";
         int remainder;
         int octal = Integer.parseInt(num);
         while (octal != 0) {
             remainder = octal % 10;
-            binary = decTobin(String.valueOf(remainder));
+            bin = decTobin(String.valueOf(remainder));
             if (octal > 8) {
-                if (binary.length() == 1) {
-                    binary = "00" + binary;
-                } else if (binary.length() == 2) {
-                    binary = "0" + binary;
+                if (bin.length() == 1) {
+                    bin = "00" + bin;
+                } else if (bin.length() == 2) {
+                    bin = "0" + bin;
                 }
             }
-            res = binary + res;
+            res = bin + res;
             octal = octal / 10;
         }
         return res;
@@ -782,7 +803,7 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private String hexTodec(String num) {
         String digits = num.toUpperCase();
-        int decnum = 0;
+        decnum = 0;
         for (int i = 0; i < digits.length(); i++) {
             char c = digits.charAt(i);
             int d = digits.indexOf(c);
@@ -801,40 +822,40 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String hexTogray(String num) {
-        String bin = hexTobin(num);
+        bin = hexTobin(num);
         return binTogray(bin);
     }
 
     private String hexToascii(String num) {
-        String bin = hexTobin(num);
+        bin = hexTobin(num);
         return binToascii(bin);
     }
 
     private String grayTobin(String num) {
-        String binary = "";
-        binary += num.charAt(0);
+        bin = "";
+        bin += num.charAt(0);
         for (int i = 1; i < num.length(); i++) {
             if (num.charAt(i) == '0') {
-                binary += binary.charAt(i - 1);
+                bin += bin.charAt(i - 1);
             } else {
-                binary += flip(binary.charAt(i - 1));
+                bin += flip(bin.charAt(i - 1));
             }
         }
-        return binary;
+        return bin;
     }
 
     private String grayTooct(String num) {
-        String bin = grayTobin(num);
+        bin = grayTobin(num);
         return binTooct(bin);
     }
 
     private String grayTodec(String num) {
-        String bin = grayTobin(num);
+        bin = grayTobin(num);
         return binTodec(bin);
     }
 
     private String grayTohex(String num) {
-        String bin = grayTobin(num);
+        bin = grayTobin(num);
         return binTohex(bin);
     }
 
@@ -843,7 +864,7 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String grayToascii(String num) {
-        String bin = grayTobin(num);
+        bin = grayTobin(num);
         return binToascii(bin);
     }
 
@@ -861,22 +882,22 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String asciiTooct(String num) {
-        String bin = asciiTobin(num);
+        bin = asciiTobin(num);
         return binTooct(bin);
     }
 
     private String asciiTodec(String num) {
-        String bin = asciiTobin(num);
+        bin = asciiTobin(num);
         return binTodec(bin);
     }
 
     private String asciiTohex(String num) {
-        String bin = asciiTobin(num);
+        bin = asciiTobin(num);
         return binTohex(bin);
     }
 
     private String asciiTogray(String num) {
-        String bin = asciiTobin(num);
+        bin = asciiTobin(num);
         return binTogray(bin);
     }
 
