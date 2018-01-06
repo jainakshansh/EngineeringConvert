@@ -51,9 +51,6 @@ public class ConversionsActivity extends AppCompatActivity {
 
     int snackCallTrack = 0;
 
-    String bin = "";
-    int decnum = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,7 +198,6 @@ public class ConversionsActivity extends AppCompatActivity {
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Runtime.getRuntime().gc();
                 fromConditions();
                 if (fromSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
                     fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -218,7 +214,6 @@ public class ConversionsActivity extends AppCompatActivity {
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Runtime.getRuntime().gc();
                 fromConditions();
                 if (toSpinner.getSelectedItemPosition() == 3) {
                     toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -479,7 +474,23 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String octTobin(String num) {
-        return new BigInteger(num, 8).toString(2);
+        String res = "", binary;
+        int remainder;
+        int octal = Integer.parseInt(num);
+        while (octal != 0) {
+            remainder = octal % 10;
+            binary = decTobin(String.valueOf(remainder));
+            if (octal > 8) {
+                if (binary.length() == 1) {
+                    binary = "00" + binary;
+                } else if (binary.length() == 2) {
+                    binary = "0" + binary;
+                }
+            }
+            res = binary + res;
+            octal = octal / 10;
+        }
+        return res;
     }
 
     private String octTooct(String num) {
@@ -487,11 +498,19 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String octTodec(String num) {
-        return new BigInteger(num, 8).toString(10);
+        int decnum = 0, i = 0;
+        Long octal = Long.parseLong(num);
+        while (octal != 0) {
+            decnum += (octal % 10) * Math.pow(8, i);
+            ++i;
+            octal = octal / 10;
+        }
+        return String.valueOf(decnum);
     }
 
     private String octTohex(String num) {
-        return new BigInteger(num, 8).toString(16);
+        String dec = octTodec(num);
+        return decTohex(dec);
     }
 
     private String hexTobin(String num) {
