@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import com.madhouseapps.engineeringconvert.Adapters.ConversionAdapter;
 import com.madhouseapps.engineeringconvert.Adapters.LowerConversionAdapter;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,8 +87,6 @@ public class ConversionsActivity extends AppCompatActivity {
         conversionList.add("Octal");
         conversionList.add("Decimal");
         conversionList.add("Hexadecimal");
-        conversionList.add("Gray");
-        conversionList.add("ASCII");
 
         conversionAdapter = new ConversionAdapter(getApplicationContext(), conversionList);
         lowerConversionAdapter = new LowerConversionAdapter(getApplicationContext(), conversionList);
@@ -221,7 +220,7 @@ public class ConversionsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Runtime.getRuntime().gc();
                 fromConditions();
-                if (toSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
+                if (toSpinner.getSelectedItemPosition() == 3) {
                     toEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     toEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -258,14 +257,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             res = binTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
-                        case 4:
-                            res = binTogray(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = binToascii(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
                     }
                     break;
                 case 1:
@@ -284,14 +275,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             break;
                         case 3:
                             res = octTohex(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 4:
-                            res = octTogray(octTobin(fromEdit.getText().toString()));
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = octToascii(octTobin(fromEdit.getText().toString()));
                             toEdit.setText(res);
                             break;
                     }
@@ -314,14 +297,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             res = decTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
-                        case 4:
-                            res = decTogray(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = decToascii(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
                     }
                     break;
                 case 3:
@@ -342,71 +317,8 @@ public class ConversionsActivity extends AppCompatActivity {
                             res = hexTohex(fromEdit.getText().toString());
                             toEdit.setText(res);
                             break;
-                        case 4:
-                            res = hexTogray(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = hexToascii(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
                     }
                     break;
-                case 4:
-                    switch (to) {
-                        case 0:
-                            res = grayTobin(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 1:
-                            res = grayTooct(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 2:
-                            res = grayTodec(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 3:
-                            res = grayTohex(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 4:
-                            res = grayTogray(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = grayToascii(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                    }
-                    break;
-                case 5:
-                    switch (to) {
-                        case 0:
-                            res = asciiTobin(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 1:
-                            res = asciiTooct(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 2:
-                            res = asciiTodec(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 3:
-                            res = asciiTohex(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 4:
-                            res = asciiTogray(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                        case 5:
-                            res = asciiToascii(fromEdit.getText().toString());
-                            toEdit.setText(res);
-                            break;
-                    }
             }
         }
     }
@@ -434,14 +346,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             res = binTohex(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
-                        case 4:
-                            res = binTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = binToascii(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
                     }
                     break;
                 case 1:
@@ -460,14 +364,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             break;
                         case 3:
                             res = octTohex(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 4:
-                            res = octTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = octToascii(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                     }
@@ -490,14 +386,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             res = decTohex(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
-                        case 4:
-                            res = decTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = decToascii(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
                     }
                     break;
                 case 3:
@@ -516,70 +404,6 @@ public class ConversionsActivity extends AppCompatActivity {
                             break;
                         case 3:
                             res = hexTohex(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 4:
-                            res = hexTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = hexToascii(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                    }
-                    break;
-                case 4:
-                    switch (to) {
-                        case 0:
-                            res = grayTobin(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 1:
-                            res = grayTooct(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 2:
-                            res = grayTodec(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 3:
-                            res = grayTohex(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 4:
-                            res = grayTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = grayToascii(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                    }
-                    break;
-                case 5:
-                    switch (to) {
-                        case 0:
-                            res = asciiTobin(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 1:
-                            res = asciiTooct(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 2:
-                            res = asciiTodec(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 3:
-                            res = asciiTohex(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 4:
-                            res = asciiTogray(toEdit.getText().toString().trim());
-                            fromEdit.setText(res);
-                            break;
-                        case 5:
-                            res = asciiToascii(toEdit.getText().toString().trim());
                             fromEdit.setText(res);
                             break;
                     }
@@ -622,101 +446,28 @@ public class ConversionsActivity extends AppCompatActivity {
         snackCallTrack++;
     }
 
-    private char flip(char c) {
-        return (c == '0') ? '1' : '0';
-    }
-
-    private char xor_c(char a, char b) {
-        return (a == b) ? '0' : '1';
-    }
-
     private String binTobin(String num) {
         return num;
     }
 
     private String binTooct(String num) {
-        Long bin = Long.parseLong(num);
-        int octnum = 0, i = 0;
-        decnum = 0;
-        while (bin != 0) {
-            decnum += (bin % 10) * Math.pow(2, i);
-            ++i;
-            bin = bin / 10;
-        }
-        i = 1;
-        while (decnum != 0) {
-            octnum += (decnum % 8) * i;
-            decnum = decnum / 8;
-            i = i * 10;
-        }
-        return String.valueOf(octnum);
+        return new BigInteger(num, 2).toString(8);
     }
 
     private String binTodec(String num) {
-        Long bin = Long.parseLong(num);
-        decnum = 0;
-        int i = 0;
-        long remainder;
-        while (bin != 0) {
-            remainder = bin % 10;
-            bin = bin / 10;
-            decnum += remainder * Math.pow(2, i);
-            ++i;
-        }
-        return String.valueOf(decnum);
+        return new BigInteger(num, 2).toString(10);
     }
 
     private String binTohex(String num) {
-        int binnum = Integer.parseInt(num), rem;
-        String hexnum = "";
-        char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        while (binnum > 0) {
-            rem = binnum % 16;
-            hexnum = hex[rem] + hexnum;
-            binnum = binnum % 16;
-        }
-        return hexnum;
-    }
-
-    private String binTogray(String num) {
-        String gray = "";
-        gray += num.charAt(0);
-        for (int i = 1; i < num.length(); i++) {
-            gray += xor_c(num.charAt(i - 1), num.charAt(i));
-        }
-        return gray;
-    }
-
-    private String binToascii(String num) {
-        String lastString = "";
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < lastString.length(); i += 8) {
-            builder.append((char) Integer.parseInt(lastString.substring(i, i + 8), 2));
-        }
-        return builder.toString();
+        return new BigInteger(num, 2).toString(16);
     }
 
     private String decTobin(String num) {
-        long binnum = 0, remainder;
-        int i = 1;
-        long n = Long.parseLong(num);
-        while (n != 0) {
-            remainder = n % 2;
-            n = n / 2;
-            binnum += remainder * i;
-            i = i * 10;
-        }
-        return String.valueOf(binnum);
+        return new BigInteger(num, 10).toString(2);
     }
 
     private String decTooct(String num) {
-        int i = 1, octnum = 0;
-        int decimal = Integer.parseInt(num);
-        while (decimal != 0) {
-            octnum += (decimal % 8) * i;
-            i = i * 10;
-        }
-        return String.valueOf(octnum);
+        return new BigInteger(num, 10).toString(8);
     }
 
     private String decTodec(String num) {
@@ -724,46 +475,11 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String decTohex(String num) {
-        String hexnum = "";
-        char[] hex = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        decnum = Integer.parseInt(num);
-        int rem;
-        while (decnum > 0) {
-            rem = decnum % 16;
-            hexnum = hex[rem] + hexnum;
-            decnum = decnum / 16;
-        }
-        return hexnum;
-    }
-
-    private String decTogray(String num) {
-        bin = decTobin(num);
-        return binTogray(bin);
-    }
-
-    private String decToascii(String num) {
-        bin = decTobin(num);
-        return binToascii(bin);
+        return new BigInteger(num, 10).toString(16);
     }
 
     private String octTobin(String num) {
-        res = "";
-        int remainder;
-        int octal = Integer.parseInt(num);
-        while (octal != 0) {
-            remainder = octal % 10;
-            bin = decTobin(String.valueOf(remainder));
-            if (octal > 8) {
-                if (bin.length() == 1) {
-                    bin = "00" + bin;
-                } else if (bin.length() == 2) {
-                    bin = "0" + bin;
-                }
-            }
-            res = bin + res;
-            octal = octal / 10;
-        }
-        return res;
+        return new BigInteger(num, 8).toString(2);
     }
 
     private String octTooct(String num) {
@@ -771,137 +487,26 @@ public class ConversionsActivity extends AppCompatActivity {
     }
 
     private String octTodec(String num) {
-        int decnum = 0, i = 0;
-        Long octal = Long.parseLong(num);
-        while (octal != 0) {
-            decnum += (octal % 10) * Math.pow(8, i);
-            ++i;
-            octal = octal / 10;
-        }
-        return String.valueOf(decnum);
+        return new BigInteger(num, 8).toString(10);
     }
 
     private String octTohex(String num) {
-        String dec = octTodec(num);
-        return decTohex(dec);
-    }
-
-    private String octTogray(String num) {
-        String dec = octTodec(num);
-        return decTogray(dec);
-    }
-
-    private String octToascii(String num) {
-        String dec = octTodec(num);
-        return decToascii(dec);
+        return new BigInteger(num, 8).toString(16);
     }
 
     private String hexTobin(String num) {
-        String decnum = hexTodec(num);
-        return decTobin(decnum);
+        return new BigInteger(num, 16).toString(2);
     }
 
     private String hexTodec(String num) {
-        String digits = num.toUpperCase();
-        decnum = 0;
-        for (int i = 0; i < digits.length(); i++) {
-            char c = digits.charAt(i);
-            int d = digits.indexOf(c);
-            decnum = (16 * decnum) + d;
-        }
-        return String.valueOf(decnum);
+        return new BigInteger(num, 16).toString(10);
     }
 
     private String hexTooct(String num) {
-        String dec = hexTodec(num);
-        return decTooct(dec);
+        return new BigInteger(num, 16).toString(8);
     }
 
     private String hexTohex(String num) {
-        return num;
-    }
-
-    private String hexTogray(String num) {
-        bin = hexTobin(num);
-        return binTogray(bin);
-    }
-
-    private String hexToascii(String num) {
-        bin = hexTobin(num);
-        return binToascii(bin);
-    }
-
-    private String grayTobin(String num) {
-        bin = "";
-        bin += num.charAt(0);
-        for (int i = 1; i < num.length(); i++) {
-            if (num.charAt(i) == '0') {
-                bin += bin.charAt(i - 1);
-            } else {
-                bin += flip(bin.charAt(i - 1));
-            }
-        }
-        return bin;
-    }
-
-    private String grayTooct(String num) {
-        bin = grayTobin(num);
-        return binTooct(bin);
-    }
-
-    private String grayTodec(String num) {
-        bin = grayTobin(num);
-        return binTodec(bin);
-    }
-
-    private String grayTohex(String num) {
-        bin = grayTobin(num);
-        return binTohex(bin);
-    }
-
-    private String grayTogray(String num) {
-        return num;
-    }
-
-    private String grayToascii(String num) {
-        bin = grayTobin(num);
-        return binToascii(bin);
-    }
-
-    private String asciiTobin(String num) {
-        byte[] bytes = num.getBytes();
-        StringBuilder binary = new StringBuilder();
-        for (byte b : bytes) {
-            int val = b;
-            for (int i = 0; i < 8; i++) {
-                binary.append((val & 128) == 0 ? 0 : 1);
-                val <<= 1;
-            }
-        }
-        return binary.toString();
-    }
-
-    private String asciiTooct(String num) {
-        bin = asciiTobin(num);
-        return binTooct(bin);
-    }
-
-    private String asciiTodec(String num) {
-        bin = asciiTobin(num);
-        return binTodec(bin);
-    }
-
-    private String asciiTohex(String num) {
-        bin = asciiTobin(num);
-        return binTohex(bin);
-    }
-
-    private String asciiTogray(String num) {
-        bin = asciiTobin(num);
-        return binTogray(bin);
-    }
-
-    private String asciiToascii(String num) {
         return num;
     }
 
