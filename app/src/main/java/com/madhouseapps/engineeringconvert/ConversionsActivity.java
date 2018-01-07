@@ -104,40 +104,78 @@ public class ConversionsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (fromEdit.getText().hashCode() == s.hashCode()) {
                     toEdit.removeTextChangedListener(textWatcher);
-                    fromConditions();
                     if (fromEdit.getText().toString().isEmpty()) {
                         toEdit.setText("");
                     }
+                    /*
+                    Checking if the input is non-binary and vibrates and calls snackbar at wrong input.
+                     */
                     if (fromSpinner.getSelectedItemPosition() == 0) {
-                        //Nulls text if the input is non-binary and vibrates at wrong input.
-                        if (isBinary(fromEdit.getText().toString())) {
+                        if (!isBinary(fromEdit.getText().toString())) {
                             toEdit.setText("");
+                        } else {
+                            fromConditions();
                         }
                         vibratePhone(isBinary(fromEdit.getText().toString()));
                     }
+                    /*
+                    Checking if the input is non-octal value and calls snackbar and vibrates at wrong input.
+                     */
+                    if (fromSpinner.getSelectedItemPosition() == 1) {
+                        if (!isOct(fromEdit.getText().toString())) {
+                            toEdit.setText("");
+                        } else {
+                            fromConditions();
+                        }
+                        vibratePhone(isOct(fromEdit.getText().toString()));
+                    }
+                    /*
+                    Checking if the input is non-hexadecimal value and calls snackbar and vibrates at wrong input.
+                     */
                     if (fromSpinner.getSelectedItemPosition() == 3) {
                         if (!isHex(fromEdit.getText().toString())) {
                             toEdit.setText("");
+                        } else {
+                            fromConditions();
                         }
                         vibratePhone(isHex(fromEdit.getText().toString()));
                     }
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
                     fromEdit.removeTextChangedListener(textWatcher);
-                    toConditions();
                     if (toEdit.getText().toString().isEmpty()) {
                         fromEdit.setText("");
                     }
+                    /*
+                    Checking if the input is non-binary value and calls snackbar and vibrates at wrong input.
+                     */
                     if (toSpinner.getSelectedItemPosition() == 0) {
-                        //Nulls text if the input is non-binary and vibrates at wrong input.
                         if (!isBinary(toEdit.getText().toString())) {
                             fromEdit.setText("");
+                        } else {
+                            toConditions();
                         }
                         vibratePhone(isBinary(toEdit.getText().toString()));
                     }
+                    /*
+                    Checking if the input is non-octal value and calls snackbar and vibrates at wrong input.
+                     */
+                    if (toSpinner.getSelectedItemPosition() == 1) {
+                        if (!isOct(toEdit.getText().toString())) {
+                            fromEdit.setText("");
+                        } else {
+                            toConditions();
+                        }
+                        vibratePhone(isOct(fromEdit.getText().toString()));
+                    }
+                    /*
+                    Checking if the input is non-hexadecimal value and calls snackbar and vibrates at wrong input.
+                     */
                     if (toSpinner.getSelectedItemPosition() == 3) {
                         if (!isHex(toEdit.getText().toString())) {
                             fromEdit.setText("");
+                        } else {
+                            toConditions();
                         }
                         vibratePhone(isHex(toEdit.getText().toString()));
                     }
@@ -198,7 +236,7 @@ public class ConversionsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 fromConditions();
-                if (fromSpinner.getSelectedItemPosition() == 3 || fromSpinner.getSelectedItemPosition() == 5) {
+                if (fromSpinner.getSelectedItemPosition() == 3) {
                     fromEdit.setInputType(InputType.TYPE_CLASS_TEXT);
                 } else {
                     fromEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -428,6 +466,10 @@ public class ConversionsActivity extends AppCompatActivity {
 
     private boolean isHex(String number) {
         return number.matches("^[0-9a-fA-F]+$");
+    }
+
+    private boolean isOct(String number) {
+        return number.matches("^[1-7][0-7]*$");
     }
 
     private void callSnackbar() {
