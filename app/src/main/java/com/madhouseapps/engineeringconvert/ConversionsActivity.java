@@ -76,7 +76,6 @@ public class ConversionsActivity extends AppCompatActivity {
         toEdit.setTypeface(typeface);
         share = findViewById(R.id.share_app);
         rate = findViewById(R.id.rate_us);
-        //seeAll = findViewById(R.id.see_all_convs);
 
         //Initialising the conversion list.
         conversionList = new ArrayList<>();
@@ -111,7 +110,7 @@ public class ConversionsActivity extends AppCompatActivity {
                     }
                     if (fromSpinner.getSelectedItemPosition() == 0) {
                         //Nulls text if the input is non-binary and vibrates at wrong input.
-                        if (!isBinary(fromEdit.getText().toString())) {
+                        if (isBinary(fromEdit.getText().toString())) {
                             toEdit.setText("");
                         }
                         vibratePhone(isBinary(fromEdit.getText().toString()));
