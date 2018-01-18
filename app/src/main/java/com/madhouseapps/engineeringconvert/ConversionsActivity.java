@@ -140,6 +140,7 @@ public class ConversionsActivity extends AppCompatActivity {
                         }
                         vibratePhone(isHex(fromEdit.getText().toString()));
                     }
+                    fromConditions();
                     toEdit.addTextChangedListener(textWatcher);
                 } else if (toEdit.getText().hashCode() == s.hashCode()) {
                     fromEdit.removeTextChangedListener(textWatcher);
@@ -179,6 +180,7 @@ public class ConversionsActivity extends AppCompatActivity {
                         }
                         vibratePhone(isHex(toEdit.getText().toString()));
                     }
+                    toConditions();
                     fromEdit.addTextChangedListener(textWatcher);
                 }
             }
