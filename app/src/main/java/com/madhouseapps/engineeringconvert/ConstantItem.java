@@ -6,19 +6,25 @@ package com.madhouseapps.engineeringconvert;
 
 public class ConstantItem {
 
-    private String constant;
+    private String name;
+    private int symbol;
     private String value;
 
     private ConstantItem() {
     }
 
-    public ConstantItem(String constant, String value) {
-        this.constant = constant;
+    public ConstantItem(String name, String value, int symbol) {
+        this.name = name;
         this.value = value;
+        this.symbol = symbol;
     }
 
-    public String getConstant() {
-        return constant;
+    public String getName() {
+        return name;
+    }
+
+    public int getSymbol() {
+        return symbol;
     }
 
     public String getValue() {

@@ -28,7 +28,7 @@ public class ConstantRecyclerAdapter extends RecyclerView.Adapter<ConstantRecycl
 
         public ConstantViewHolder(View view) {
             super(view);
-            constant = view.findViewById(R.id.constant_desc);
+            constant = view.findViewById(R.id.constant_name);
             value = view.findViewById(R.id.constant_value);
         }
     }
@@ -50,7 +50,7 @@ public class ConstantRecyclerAdapter extends RecyclerView.Adapter<ConstantRecycl
         ConstantItem item = constantItemList.get(position);
 
         holder.constant.setTypeface(quicksand_medium);
-        holder.constant.setText(item.getConstant());
+        holder.constant.setText(item.getName());
         holder.value.setTypeface(quicksand_medium);
         holder.value.setText(item.getValue());
     }

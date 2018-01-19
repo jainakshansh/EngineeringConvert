@@ -16,13 +16,13 @@
             android:name=".ConversionsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="adjustResize|stateHidden">
+        </activity>
+        <activity android:name=".ConstantsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConstantsActivity"></activity>
     </application>
 
 </manifest>

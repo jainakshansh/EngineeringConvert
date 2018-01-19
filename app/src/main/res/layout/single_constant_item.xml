@@ -1,28 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="4dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/constant_desc"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        tools:text="Hello World" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-    <TextView
-        android:id="@+id/constant_value"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        tools:text="Hello World" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/constant_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                tools:text="Hello World" />
+
+            <ImageView
+                android:id="@+id/constant_symbol"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginTop="4dp"
+                android:contentDescription="@string/constant_symbol" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/constant_value"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            tools:text="Hello World" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
