@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/MadHouseTheme">
-        <activity android:name=".LandingActivity">
+        <activity
+            android:name=".LandingActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,8 +23,10 @@
         <activity
             android:name=".ConversionsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
-        <activity android:name=".ConstantsActivity" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ConstantsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

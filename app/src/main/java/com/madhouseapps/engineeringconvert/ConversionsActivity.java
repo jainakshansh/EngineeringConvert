@@ -1,14 +1,12 @@
 package com.madhouseapps.engineeringconvert;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +32,7 @@ public class ConversionsActivity extends AppCompatActivity {
     private ConstraintLayout constraintParent;
     private AppCompatSpinner fromSpinner, toSpinner;
     private AppCompatEditText fromEdit, toEdit;
-    private Button swapButton, seeAll;
+    private Button swapButton;
     private ImageView share, rate;
 
     private int from = 0, to = 0;
@@ -45,8 +43,6 @@ public class ConversionsActivity extends AppCompatActivity {
     private ConversionAdapter conversionAdapter;
     private LowerConversionAdapter lowerConversionAdapter;
 
-    private SharedPreferences sharedPreferences;
-    int appOpened = 1;
     String res = "";
 
     int snackCallTrack = 0;
@@ -55,14 +51,6 @@ public class ConversionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversions);
-
-        //Checking for the number of times the app has been opened, according to which rate dialog will appear.
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        appOpened = sharedPreferences.getInt("appOpened", 0);
-        appOpened++;
-        editor.putInt("appOpened", appOpened);
-        editor.apply();
 
         //Referencing all the views from the XML file.
         constraintParent = findViewById(R.id.conversion_constraint_parent);
@@ -574,11 +562,7 @@ public class ConversionsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (appOpened % 8 == 0) {
-            MadHouseDialog dialog = new MadHouseDialog(ConversionsActivity.this);
-            dialog.show();
-        } else {
-            finish();
-        }
+        super.onBackPressed();
+        finish();
     }
 }
