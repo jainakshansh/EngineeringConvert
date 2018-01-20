@@ -4,53 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".LandingActivity">
 
-    <TextView
-        android:id="@+id/mad_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/madhouse_text_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/mad"
-        android:textColor="@android:color/black"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/quote_landing"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/house_text"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/mad_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="@string/mad"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/house_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/house"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/house_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/quote_landing"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="@string/house"
+        android:layout_margin="48dp"
+        android:text="@string/science_can_amuse_and_fascinate_us_all_but_it_is_engineering_that_changes_the_world_n_isaac_asimov"
         android:textColor="@android:color/black"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintLeft_toRightOf="@id/mad_text"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/madhouse_text_parent" />
+
+    <Button
+        android:id="@+id/conversion_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/redgradient"
+        android:text="@string/conversions"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quote_landing" />
+
+    <Button
+        android:id="@+id/constants_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bluegradient"
+        android:text="@string/constants"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversion_button" />
 
     <Button
         android:id="@+id/share_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/gradient_button"
         android:text="@string/share"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/rate_button" />
 
     <Button
         android:id="@+id/rate_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/gradient_button"
         android:text="@string/rate"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toRightOf="@id/share_button"
         app:layout_constraintRight_toRightOf="parent" />
 

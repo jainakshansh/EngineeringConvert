@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 public class LandingActivity extends AppCompatActivity {
 
-    private TextView madText, houseText;
+    private TextView madText, houseText, quote;
+    private Button conversion, constant;
     private Button share, rate;
 
     private Typeface quicksand;
@@ -26,6 +27,12 @@ public class LandingActivity extends AppCompatActivity {
         houseText = findViewById(R.id.house_text);
         madText.setTypeface(quicksand);
         houseText.setTypeface(quicksand, Typeface.BOLD);
+        conversion = findViewById(R.id.conversion_button);
+        conversion.setTypeface(quicksand, Typeface.BOLD);
+        constant = findViewById(R.id.constants_button);
+        constant.setTypeface(quicksand, Typeface.BOLD);
+        quote = findViewById(R.id.quote_landing);
+        quote.setTypeface(quicksand);
 
         share = findViewById(R.id.share_button);
         rate = findViewById(R.id.rate_button);
