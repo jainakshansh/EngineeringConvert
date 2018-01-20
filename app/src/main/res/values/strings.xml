@@ -6,4 +6,10 @@
     <string name="rate_us">Rate Us</string>
     <string name="share_app">Share App</string>
     <string name="constant_symbol">Constant Symbol</string>
+    <string name="mad">MAD</string>
+    <string name="house">HOUSE</string>
+    <string name="share">Share</string>
+    <string name="rate">Rate</string>
+    <string name="conversions">Conversions</string>
+    <string name="constants">Constants</string>
 </resources>

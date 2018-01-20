@@ -4,32 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.madhouseapps.engineeringconvert.LandingActivity">
+    tools:context=".LandingActivity">
 
-    <Button
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/mad_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="192dp"
-        android:background="@android:color/transparent"
-        android:onClick="conversionsClass"
-        android:text="Conversions"
+        android:layout_marginTop="48dp"
+        android:text="@string/mad"
+        android:textColor="@android:color/black"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/house_text"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/house_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/house"
+        android:textColor="@android:color/black"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@id/mad_text"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="192dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="36dp"
-        android:background="@android:color/transparent"
-        android:onClick="constantsClass"
-        android:text="Constants"
+        android:id="@+id/share_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/gradient_button"
+        android:text="@string/share"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/rate_button" />
+
+    <Button
+        android:id="@+id/rate_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/gradient_button"
+        android:text="@string/rate"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/share_button"
         app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
